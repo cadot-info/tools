@@ -26,23 +26,32 @@ trait Tools
      *
      * @param  string $start url of strat seek
      * @param  int $descent number or sub links
-     * @param  mixed $client send a client if you have login for example
+     * @param  array $urlTwoPoints extract before : , example mailto, htpp..., default: 'mailto', 'http', 'https'
+     * @param  array $urlPoint extract before first point , example www, default 'www'
+     * @param  array $classRefuse don't take link if class is in this array. It's for js for example
+     * @param  array|boolean $client send a client if you have login for example
      * @param  array $links for recursivity
      * @return array of url of links
      */
-    public function returnAllLinks(string $start, int $descent = 0,$client=false, array $links = [])
+    public function returnAllLinks(string $start, int $descent = 0, $client=false,$urlTwoPoints,$urlPoint,array $classRefuse ,array $links = []):array
     {
+        //init default value
+        if($urlTwoPoints==null)$urlTwoPoints=['mailto', 'http', 'https'];
+        if( $urlPoint==null)$urlPoint=['www'];
+        if($classRefuse==null)$classRefuse=[];
+
+
         $exlinks = $links;
         if(!$client)$client = static::createClient();
         $crawler = $client->request('GET', $start);
-        //on regarde les liens de la page
-        foreach ($crawler->filter('a[href]') as $link) { // on ne prend pas les liens sans href
+        //see links of the page
+        foreach ($crawler->filter('a[href]') as $link) { // no get link without href
             /** @var DOMElement $link */
             $url = $link->getAttribute('href');
-            // on ne prend pas les liens déjà pris, ni les mailto ni les url extérieures, ni les bigpictures
-            if (!in_array(explode(':', $url)[0], ['mailto', 'http', 'https']) && explode('.', $url)[0] != 'www' &&  !isset($exlinks[$url]) && !in_array('bigpicture', explode(' ', $link->getAttribute('class')))) {
+            // pass link exist and if has not the class, not in urlpoint and urlTwoPoints
+            if (!in_array(explode(':', $url)[0], $urlTwoPoints) && (!in_array(explode('.', $url)[0],$urlPoint)) &&  !isset($exlinks[$url]) && count(array_intersect($classRefuse, explode(' ', $link->getAttribute('class'))))==0){
                 if ($descent > -1) { // si on est dans une récursivité acceptée
-                    $links = $this->returnAllLinks($url, $descent - 1,$client, $links);
+                    $links = $this->returnAllLinks($url, $descent - 1,$client,$urlTwoPoints,$urlPoint,$classRefuse, $links);
                 } else {
                     $links[$url] = trim(preg_replace('/\s+/', ' ', str_replace(array("\n", "\r", ""), '', $link->nodeValue)));
                 }
