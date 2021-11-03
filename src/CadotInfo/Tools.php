@@ -30,7 +30,7 @@ trait Tools
      * @param  array $links for recursivity
      * @return array of url of links
      */
-    public function returnAllLinks(string $start, int $descent = 0,$client=false, array $links = []):array
+    public function returnAllLinks(string $start, int $descent = 0,$client=false, array $links = [])
     {
         $exlinks = $links;
         if(!$client)$client = static::createClient();
