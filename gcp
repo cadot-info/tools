@@ -20,6 +20,9 @@ while getopts ":h" option; do
       h) # display Help
          Help
          exit;;
+     \?) # incorrect option
+         echo "Error: Invalid option"
+         exit;;
    esac
 done
 
