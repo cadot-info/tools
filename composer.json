@@ -23,7 +23,16 @@
     "symfony/validator": "5.2.*",
     "symfony/web-link": "5.2.*",
     "symfony/yaml": "5.2.*"
-},
+}
+,
+"homepage": "https://github.com/cadot-info/tools#readme",
+    "keywords": [
+        "symfony",
+        "test",
+        "links",
+        "tools",
+        "testing"
+    ],
   "license": "MIT",
   "autoload": {
     "psr-4": {
