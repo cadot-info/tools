@@ -12,7 +12,7 @@ Return a array of url links of page and sub-page:
 >- array $urlPoint extract before first point , example www, default 'www'
 >- array $classRefuse don't take link if class is in this array. It's for js for example
 >- array|boolean $client send a client if you have login for example
->- array $links for recursivity
+>- array $links for  recursivity
 
 ### E
 
