@@ -2,7 +2,6 @@
   "name": "cadot.info/symfony-testing-tools",
   "description": "{",
   "type": "library",
-  "version":"1.0.3",
   "require": {
     "php": ">=7.2.5",
     "php-webdriver/webdriver": "^1.11",
