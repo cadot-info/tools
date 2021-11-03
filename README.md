@@ -1,6 +1,8 @@
 # Tools <img align="right" width="100" height="100" src="https://avatars.githubusercontent.com/u/68180174?s=80 ">
 
-## Note: used with WebTestCase. Problems with PantherTestCase
+## Note
+
+used with WebTestCase. Problems with PantherTestCase
 
 ## Functions
 
