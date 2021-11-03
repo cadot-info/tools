@@ -1,0 +1,19 @@
+{
+  "name": "cadot.info/symfony-testing-tools",
+  "description": "{",
+  "type": "library",
+  "require": {},
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "CadotInfo\\SymfonyTestingTools\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "cadot.info",
+      "email": "composer@cadot.info"
+    }
+  ],
+  "minimum-stability": "dev"
+}
