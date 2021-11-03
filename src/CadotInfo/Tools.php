@@ -33,6 +33,7 @@ trait Tools
      * @param  array $links for recursivity
      * @return array of url of links
      */
+    
     public function returnAllLinks(string $start, int $descent = 0, $client=false,$urlTwoPoints,$urlPoint,array $classRefuse ,array $links = []):array
     {
         //init default value
