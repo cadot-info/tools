@@ -2,7 +2,28 @@
   "name": "cadot.info/symfony-testing-tools",
   "description": "{",
   "type": "library",
-  "require": {},
+  "version":"1.0.0",
+  "require": {
+    "php": ">=7.2.5",
+    "php-webdriver/webdriver": "^1.11",
+    "phpunit/phpunit-selenium": "^9.0",
+    "symfony/asset": "5.2.*",
+    "symfony/console": "5.2.*",
+    "symfony/dotenv": "5.2.*",
+    "symfony/monolog-bundle": "^3.6",
+    "symfony/panther": "^1.1",
+    "symfony/process": "5.2.*",
+    "symfony/property-access": "5.2.*",
+    "symfony/property-info": "5.2.*",
+    "symfony/proxy-manager-bridge": "5.2.*",
+    "symfony/psr-http-message-bridge": "^2.1",
+    "symfony/security-bundle": "5.2.*",
+    "symfony/serializer": "5.2.*",
+    "symfony/string": "5.2.*",
+    "symfony/validator": "5.2.*",
+    "symfony/web-link": "5.2.*",
+    "symfony/yaml": "5.2.*"
+},
   "license": "MIT",
   "autoload": {
     "psr-4": {
@@ -15,5 +36,6 @@
       "email": "composer@cadot.info"
     }
   ],
+
   "minimum-stability": "dev"
 }
