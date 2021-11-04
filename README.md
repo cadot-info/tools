@@ -5,10 +5,9 @@
 
 ### returnAllLinks
 
+Testing for Panther and Web test Case
 Return a array of url links of page and sub-page:
 
-**If you use PantherCase, create a other client for call this function by 
-`$client2 = static::createClient();` for example**
 
 >- string $start url of strat seek
 >- int $descent number or sub links

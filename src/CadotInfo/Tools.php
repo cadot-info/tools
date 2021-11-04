@@ -17,6 +17,8 @@
 
 namespace CadotInfo;
 
+use DOMDocument;
+
 
 trait Tools
 {
@@ -36,26 +38,33 @@ trait Tools
     public function returnAllLinks(string $start, int $descent = 0, $client = false, $urlTwoPoints, $urlPoint, array $classRefuse, array $links = []): array
     {
         //init default value
-        if ($urlTwoPoints == null) $urlTwoPoints = ['mailto', 'http', 'https'];
+        if ($urlTwoPoints == null) $urlTwoPoints = ['mailto', 'http', 'https', 'javascript'];
         if ($urlPoint == null) $urlPoint = ['www'];
         if ($classRefuse == null) $classRefuse = [];
-
-
         $exlinks = $links;
         if (!$client) $client = static::createClient();
-        $crawler = $client->request('GET', $start);
+        $client->request('GET', $start);
         //see links of the page
-        foreach ($crawler->filter('a[href]') as $link) { // no get link without href
-            /** @var DOMElement $link */
-            $url = $link->getAttribute('href');
-            // pass link exist and if has not the class, not in urlpoint and urlTwoPoints
-            if (!in_array(explode(':', $url)[0], $urlTwoPoints) && (!in_array(explode('.', $url)[0], $urlPoint)) &&  !isset($exlinks[$url]) && count(array_intersect($classRefuse, explode(' ', $link->getAttribute('class')))) == 0) {
-                if ($descent > 0) { // si on est dans une récursivité acceptée
-                    $links = $this->returnAllLinks($url, $descent - 1, $client, $urlTwoPoints, $urlPoint, $classRefuse, $links);
-                } else {
-                    $links[$url] = trim(preg_replace('/\s+/', ' ', str_replace(array("\n", "\r", ""), '', $link->nodeValue)));
+        $liens = $client->getCrawler()->html();
+        $htmlDom = new DOMDocument;
+        //Parse the HTML of the page using DOMDocument::loadHTML
+        @$htmlDom->loadHTML($liens);
+        //Extract the links from the HTML.
+        //$links = $htmlDom->getElementsByTagName('a');
+        foreach ($htmlDom->getElementsByTagName('a') as $link) { // no get link without href
+            if ($link->hasAttribute('href'))
+                if ($link->getAttribute('href') != '') {
+                    /** @var DOMElement $link */
+                    $url = $link->getAttribute('href');
+                    // pass link exist and if has not the class, not in urlpoint and urlTwoPoints
+                    if (!in_array(explode(':', $url)[0], $urlTwoPoints) && (!in_array(explode('.', $url)[0], $urlPoint)) &&  !isset($exlinks[$url]) && count(array_intersect($classRefuse, explode(' ', $link->getAttribute('class')))) == 0 && substr($url, 0, strlen('http')) != 'http' && substr($url, 0, strlen('/_profiler/')) != '/_profiler/') {
+                        if ($descent > 0) { // si on est dans une récursivité acceptée
+                            $links = $this->returnAllLinks($url, $descent - 1, $client, $urlTwoPoints, $urlPoint, $classRefuse, $links);
+                        } else {
+                            $links[$url] = trim(preg_replace('/\s+/', ' ', str_replace(array("\n", "\r", ""), '', $link->nodeValue)));
+                        }
+                    }
                 }
-            }
         }
         return $links;
     }
