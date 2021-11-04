@@ -20,7 +20,7 @@ namespace CadotInfo;
 
 trait Tools
 {
-    
+
     /**
      * returnAllLinks 
      *
@@ -33,33 +33,32 @@ trait Tools
      * @param  array $links for recursivity
      * @return array of url of links
      */
-    
-    public function returnAllLinks(string $start, int $descent = 0, $client=false,$urlTwoPoints,$urlPoint,array $classRefuse ,array $links = []):array
+    public function returnAllLinks(string $start, int $descent = 0, $client = false, $urlTwoPoints, $urlPoint, array $classRefuse, array $links = []): array
     {
         //init default value
-        if($urlTwoPoints==null)$urlTwoPoints=['mailto', 'http', 'https'];
-        if( $urlPoint==null)$urlPoint=['www'];
-        if($classRefuse==null)$classRefuse=[];
+        if ($urlTwoPoints == null) $urlTwoPoints = ['mailto', 'http', 'https'];
+        if ($urlPoint == null) $urlPoint = ['www'];
+        if ($classRefuse == null) $classRefuse = [];
 
 
         $exlinks = $links;
-        if(!$client)$client = static::createClient();
+        if (!$client) $client = static::createClient();
         $crawler = $client->request('GET', $start);
         //see links of the page
         foreach ($crawler->filter('a[href]') as $link) { // no get link without href
             /** @var DOMElement $link */
             $url = $link->getAttribute('href');
             // pass link exist and if has not the class, not in urlpoint and urlTwoPoints
-            if (!in_array(explode(':', $url)[0], $urlTwoPoints) && (!in_array(explode('.', $url)[0],$urlPoint)) &&  !isset($exlinks[$url]) && count(array_intersect($classRefuse, explode(' ', $link->getAttribute('class'))))==0){
-                if ($descent > -1) { // si on est dans une récursivité acceptée
-                    $links = $this->returnAllLinks($url, $descent - 1,$client,$urlTwoPoints,$urlPoint,$classRefuse, $links);
+            if (!in_array(explode(':', $url)[0], $urlTwoPoints) && (!in_array(explode('.', $url)[0], $urlPoint)) &&  !isset($exlinks[$url]) && count(array_intersect($classRefuse, explode(' ', $link->getAttribute('class')))) == 0) {
+                if ($descent > 0) { // si on est dans une récursivité acceptée
+                    $links = $this->returnAllLinks($url, $descent - 1, $client, $urlTwoPoints, $urlPoint, $classRefuse, $links);
                 } else {
                     $links[$url] = trim(preg_replace('/\s+/', ' ', str_replace(array("\n", "\r", ""), '', $link->nodeValue)));
                 }
             }
         }
         return $links;
-    }    
+    }
 
     /**
      * E funtion for send message immediatly
@@ -67,7 +66,7 @@ trait Tools
      * @param  string $texte
      * @return void
      */
-    public function E(string $texte):void
+    public function E(string $texte): void
     {
         echo "- " . ucfirst($texte) . "\n";
         ob_flush();
