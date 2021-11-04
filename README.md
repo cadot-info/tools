@@ -1,14 +1,13 @@
 # Tools <img align="right" width="100" height="100" src="https://avatars.githubusercontent.com/u/68180174?s=80 ">
 
-## Note
-
-used with WebTestCase. Problems with PantherTestCase
 
 ## Functions
 
 ### returnAllLinks
 
 Return a array of url links of page and sub-page:
+
+**If you use PantherCase, create a other client for call this function**
 
 >- string $start url of strat seek
 >- int $descent number or sub links
