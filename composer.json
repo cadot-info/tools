@@ -1,6 +1,6 @@
 {
   "name": "cadot.info/symfony-testing-tools",
-  "description": "Libarry for get a array links of website for testing",
+  "description": "Library for get a array links of website for testing",
   "type": "library",
   "require": {
     "php": ">=7.2.5",
