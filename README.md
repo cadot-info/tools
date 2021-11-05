@@ -8,8 +8,16 @@
 Testing for Panther and Web test Case
 Return a array of url links of page and sub-page:
 
+***example:***
+`$links=$this->returnAllLinks('/');`
+or
 
->- string $start url of strat seek
+```php  
+$client = static::createPantherClient();
+$liens = $this->returnAllLinks('/compte', 0, $client, null, null, ['bigpicture']);
+```
+
+>- string $start url of start seek
 >- int $descent number or sub links
 >- array $urlTwoPoints extract before : , example mailto, htpp..., default: 'mailto', 'http', 'https'
 >- array $urlPoint extract before first point , example www, default 'www'
