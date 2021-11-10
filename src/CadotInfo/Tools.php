@@ -57,7 +57,7 @@ trait Tools
                     /** @var DOMElement $link */
                     $url = $link->getAttribute('href');
                     // pass link exist and if has not the class, not in urlpoint and urlTwoPoints
-                    if (!in_array(explode(':', $url)[0], $urlTwoPoints) && (!in_array(explode('.', $url)[0], $urlPoint)) &&  !isset($exlinks[$url]) && count(array_intersect($classRefuse, explode(' ', $link->getAttribute('class')))) == 0 && substr($url, 0, strlen('/_profiler/')) != '/_profiler/') {
+                    if (!in_array(explode(':', $url)[0], $urlTwoPoints) && (!in_array(explode('.', $url)[0], $urlPoint)) &&  !isset($exlinks[$url]) && count(array_intersect($classRefuse, explode(' ', $link->getAttribute('class')))) == 0 && substr($url, 0, 1) != '#' && substr($url, 0, strlen('/_profiler/')) != '/_profiler/') {
                         if ($descent > 0) { // si on est dans une récursivité acceptée
                             $links = $this->returnAllLinks($url, $descent - 1, $client, $urlTwoPoints, $urlPoint, $classRefuse, $links);
                         } else {
