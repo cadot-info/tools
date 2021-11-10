@@ -1,0 +1,17 @@
+version: '3'
+services:
+  tools:
+    image: cadotinfo/symfony5
+    container_name: tools
+    volumes:
+      - .:/app
+    networks:
+      - web
+    restart: always
+    ports:
+      - 80
+
+
+networks:
+  web:
+    external: true

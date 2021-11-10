@@ -24,9 +24,12 @@ $liens = $this->returnAllLinks('/compte', 0, $client, null, null, ['bigpicture']
 > - array|boolean $client send a client if you have login for example
 > - array $links for recursivity
 
-the anchor links is ignored (#...)
+#### Ignore links
 
-### E
+- the anchor links (#...)
+- link begin by "/\_profiler/"
+
+### function E
 
 Return a immediatly message
 
@@ -42,4 +45,16 @@ use CadotInfo\Tools;
 class ClientTest extends PantherTestCase
 {
    use Tools;
+   ...
+   $liens = $this->returnAllLinks('/', 1, null, ['mailto',  'javascript'], [''], ['bigpicture']);
+        foreach ($liens as $url => $texte) {
+            dump("Test url:$url(texte)");
+   ...
+   $this->E('test of links');
+
 ```
+
+### tests links
+
+(http://google.fr)
+(http://thispagedontexiste.exist)
