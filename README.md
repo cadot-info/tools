@@ -24,6 +24,8 @@ $liens = $this->returnAllLinks('/compte', 0, $client, null, null, ['bigpicture']
 > - array|boolean $client send a client if you have login for example
 > - array $links for recursivity
 
+the anchor links is ignored (#...)
+
 ### E
 
 Return a immediatly message
