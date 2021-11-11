@@ -30,12 +30,13 @@ trait Tools
      * @param  int $descent number or sub links
      * @param  array $urlTwoPoints extract before : , example mailto, htpp..., default: 'mailto', 'http', 'https'
      * @param  array $urlPoint extract before first point , example www, default 'www'
+     * @param  array|boolean links nottest
      * @param  array $classRefuse don't take link if class is in this array. It's for js for example
      * @param  array|boolean $client send a client if you have login for example
      * @param  array $links for recursivity
      * @return array of url of links
      */
-    public function returnAllLinks(string $start, int $descent = 0, $client = false, $urlTwoPoints = null, $urlPoint = null, array $classRefuse = [], array $links = []): array
+    public function returnAllLinks(string $start, int $descent = 0, $client = false, $urlTwoPoints = null, $urlPoint = null, array $nolinks = [], array $classRefuse = [], array $links = []): array
     {
         //init default value
         if ($urlTwoPoints == null) $urlTwoPoints = ['mailto', 'http', 'https', 'javascript'];
@@ -53,7 +54,7 @@ trait Tools
         //$links = $htmlDom->getElementsByTagName('a');
         foreach ($htmlDom->getElementsByTagName('a') as $link) { // no get link without href
             if ($link->hasAttribute('href'))
-                if ($link->getAttribute('href') != '') {
+                if ($link->getAttribute('href') != '' && !in_array($link->getAttribute('href'), $nolinks)) {
                     /** @var DOMElement $link */
                     $url = $link->getAttribute('href');
                     // pass link exist and if has not the class, not in urlpoint and urlTwoPoints
